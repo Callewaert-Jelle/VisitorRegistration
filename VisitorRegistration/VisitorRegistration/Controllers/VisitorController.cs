@@ -48,8 +48,28 @@ namespace VisitorRegistration.Controllers
 
         public IActionResult LogOut()
         {
+            Visitor visitor = _visitorRepository.GetBy(1);
+
             IEnumerable<Visitor> visitors = _visitorRepository.GetCurrentVisitors();
             return View(visitors);
+        }
+
+        [HttpPost]
+        public IActionResult LogOut(int id)
+        {
+            Visitor visitor = _visitorRepository.GetBy(id);
+            try
+            {
+                visitor.LogOut();
+                _visitorRepository.SaveChanges();
+                TempData["message"] = $"Successfully logged out: {visitor.LastName} {visitor.Name}";
+                return View(nameof(Index));
+            }
+            catch(Exception e)
+            {
+
+            }
+            return View(nameof(LogOut));
         }
 
         private void MapViewModelToVisitor(VisitorViewModel viewModel, Visitor visitor)

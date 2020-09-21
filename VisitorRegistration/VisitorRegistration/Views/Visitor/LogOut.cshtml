@@ -22,7 +22,11 @@
             <td>@visitor.LastName</td>
             <td>@visitor.VisitorType</td>
             <td>
-                <a asp-controller="Visitor" asp-action="LogOut" asp-route-id="@visitor.VisitorId">Log out</a>
+                <form asp-controller="Visitor" asp-action="LogOut" asp-route-id="@visitor.VisitorId" method="post" role="form">
+                    <div>
+                        <button type="submit" name="logout">Log out</button>
+                    </div>
+                </form>
             </td>
         </tr>
     }
