@@ -6,6 +6,7 @@ using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
 using VisitorRegistration.Models;
+using VisitorRegistration.Models.Domain;
 
 namespace VisitorRegistration.Controllers
 {
@@ -20,6 +21,7 @@ namespace VisitorRegistration.Controllers
 
         public IActionResult Index()
         {
+            Visitor v = new Visitor("John", "Doe", VisitorType.VISITOR);
             return View();
         }
 
