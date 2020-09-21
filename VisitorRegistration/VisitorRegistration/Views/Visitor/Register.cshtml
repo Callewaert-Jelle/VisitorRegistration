@@ -1,0 +1,47 @@
+﻿@model VisitorRegistration.Models.VisitorViewModels.VisitorViewModel
+
+@using VisitorRegistration.Models.Domain
+@*
+    Basically the 'create'..
+*@
+@{
+
+}
+
+<h1>Register</h1>
+<form method="post">
+    <div asp-validation-summary="All"></div>
+    <div class="form-group">
+        <label asp-for="Name"></label>
+        <input asp-for="Name" class="form-control"/>
+        <span asp-validation-for="Name" class="text-danger"></span>
+    </div>
+    <div class="form-group">
+        <label asp-for="LastName"></label>
+        <input asp-for="LastName" class="form-control"/>
+        <span asp-validation-for="LastName" class="text-danger"></span>
+    </div>
+    <div class="form-group">
+        <label asp-for="LastName"></label>
+        <select asp-for="LastName" asp-items="Html.GetEnumSelectList<VisitorType>()" class="form-control">
+            <option value="">-- Select type --</option>
+        </select>
+        <span asp-validation-for="LastName" class="text-danger"></span>
+    </div>
+    <div class="form-group">
+        <label asp-for="Company"></label>
+        <input asp-for="Company" class="form-control"/>
+        <span asp-validation-for="Company" class="text-danger"></span>
+    </div>
+    <div class="form-group">
+        <label asp-for="LicensePlate"></label>
+        <input asp-for="LicensePlate" class="form-control"/>
+        <span asp-validation-for="LicensePlate" class="text-danger"></span>
+    </div>
+
+    <div>
+        <button class="btn btn-primary" type="submit">Save</button>
+        <a asp-action="Index" class="btn btn-secondary">Cancel</a>
+    </div>
+</form>
+

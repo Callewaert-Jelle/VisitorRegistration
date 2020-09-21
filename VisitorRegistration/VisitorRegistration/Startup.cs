@@ -62,7 +62,7 @@ namespace VisitorRegistration
             {
                 endpoints.MapControllerRoute(
                     name: "default",
-                    pattern: "{controller=Visitation}/{action=Index}/{id?}");
+                    pattern: "{controller=Visitor}/{action=Index}/{id?}");
                 endpoints.MapRazorPages();
             });
         }
