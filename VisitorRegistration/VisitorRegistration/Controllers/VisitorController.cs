@@ -49,8 +49,6 @@ namespace VisitorRegistration.Controllers
 
         public IActionResult LogOut()
         {
-            Visitor visitor = _visitorRepository.GetBy(1);
-
             IEnumerable<Visitor> visitors = _visitorRepository.GetCurrentVisitors();
             return View(visitors);
         }
@@ -76,7 +74,8 @@ namespace VisitorRegistration.Controllers
         [Authorize(Policy = "AdminOnly")]
         public IActionResult Consult()
         {
-            return View();
+            IEnumerable<Visitor> visitors = _visitorRepository.GetCurrentVisitors();
+            return View(visitors);
         }
 
         private void MapViewModelToVisitor(VisitorViewModel viewModel, Visitor visitor)

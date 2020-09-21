@@ -6,14 +6,14 @@
     ViewData["Title"] = "Log out";
 }
 
-<h1>Log out</h1>
+<h1>@ViewData["Title"]</h1>
 <p>Current registered amount: <b>@Model.Count()</b></p>
 
 <table class="table table-striped table-bordered">
     <tr>
         <th>Name</th>
         <th>Last Name</th>
-        <th>Type</th>
+        <th>Type of visitor</th>
     </tr>
     @foreach(var visitor in Model)
     {
