@@ -1,5 +1,4 @@
 ﻿using Microsoft.AspNetCore.Mvc;
-using Microsoft.AspNetCore.Mvc.Rendering;
 using System;
 using System.Collections.Generic;
 using VisitorRegistration.Models.Domain;
@@ -49,7 +48,8 @@ namespace VisitorRegistration.Controllers
 
         public IActionResult LogOut()
         {
-            return View();
+            IEnumerable<Visitor> visitors = _visitorRepository.GetAllByDate(DateTime.Now);
+            return View(visitors);
         }
 
         private void MapViewModelToVisitor(VisitorViewModel viewModel, Visitor visitor)
