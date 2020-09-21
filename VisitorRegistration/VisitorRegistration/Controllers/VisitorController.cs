@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Mvc;
 using System;
 using System.Collections.Generic;
 using VisitorRegistration.Models.Domain;
@@ -70,6 +71,12 @@ namespace VisitorRegistration.Controllers
 
             }
             return View(nameof(LogOut));
+        }
+
+        [Authorize(Policy = "AdminOnly")]
+        public IActionResult Consult()
+        {
+            return View();
         }
 
         private void MapViewModelToVisitor(VisitorViewModel viewModel, Visitor visitor)
