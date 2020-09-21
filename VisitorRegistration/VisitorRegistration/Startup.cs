@@ -1,17 +1,14 @@
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
 using Microsoft.AspNetCore.Builder;
-using Microsoft.AspNetCore.Identity;
-using Microsoft.AspNetCore.Identity.UI;
 using Microsoft.AspNetCore.Hosting;
-using Microsoft.AspNetCore.HttpsPolicy;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
-using VisitorRegistration.Data;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
+using System.Security.Claims;
+using VisitorRegistration.Data;
+using VisitorRegistration.Data.Repositories;
+using VisitorRegistration.Models.Domain;
 
 namespace VisitorRegistration
 {
@@ -34,10 +31,18 @@ namespace VisitorRegistration
                 .AddEntityFrameworkStores<ApplicationDbContext>();
             services.AddControllersWithViews();
             services.AddRazorPages();
+
+            services.AddAuthorization(options =>
+            {
+                options.AddPolicy("AdminOnly", policy => policy.RequireClaim(ClaimTypes.Role, "admin"));
+            });
+
+            services.AddScoped<IVisitorRepository, VisitorRepository>();
+            services.AddScoped<DbInitializer>();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
-        public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
+        public void Configure(IApplicationBuilder app, IWebHostEnvironment env, DbInitializer dbInitializer)
         {
             if (env.IsDevelopment())
             {
@@ -65,6 +70,7 @@ namespace VisitorRegistration
                     pattern: "{controller=Visitor}/{action=Index}/{id?}");
                 endpoints.MapRazorPages();
             });
+            dbInitializer.InitializeData().Wait();
         }
     }
 }

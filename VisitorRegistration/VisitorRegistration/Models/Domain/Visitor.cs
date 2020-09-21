@@ -5,6 +5,7 @@ namespace VisitorRegistration.Models.Domain
     public class Visitor
     {
         #region properties
+        public int VisitorId { get; set; }
         public string Name { get; set; }
         public string LastName { get; set; }
         public DateTime Entered { get; set; }
