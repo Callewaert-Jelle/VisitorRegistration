@@ -20,27 +20,27 @@ namespace VisitorRegistration.Data.Repositories
 
         public void Add(Visitor visitor)
         {
-            throw new NotImplementedException();
+            _visitors.Add(visitor);
         }
 
         public IEnumerable<Visitor> GetAll()
         {
-            throw new NotImplementedException();
+            return _visitors.ToList();
         }
 
         public IEnumerable<Visitor> GetAllByDate(DateTime date)
         {
-            throw new NotImplementedException();
+            return _visitors.Where(v => v.Entered.Date == DateTime.Now.Date);
         }
 
         public Visitor GetBy(int visitorId)
         {
-            throw new NotImplementedException();
+            return _visitors.FirstOrDefault(v => v.VisitorId == visitorId);
         }
 
         public void SaveChanges()
         {
-            throw new NotImplementedException();
+            _dbContext.SaveChanges();
         }
     }
 }

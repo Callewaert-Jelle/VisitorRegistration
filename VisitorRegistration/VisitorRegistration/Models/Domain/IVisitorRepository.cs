@@ -5,7 +5,7 @@ using System.Threading.Tasks;
 
 namespace VisitorRegistration.Models.Domain
 {
-    interface IVisitorRepository
+    public interface IVisitorRepository
     {
         Visitor GetBy(int visitorId);
         IEnumerable<Visitor> GetAll();

@@ -9,6 +9,12 @@ namespace VisitorRegistration.Controllers
 {
     public class VisitorController : Controller
     {
+        private readonly IVisitorRepository _visitorRepository;
+        public VisitorController(IVisitorRepository visitorRepository)
+        {
+            _visitorRepository = visitorRepository;
+        }
+
         public IActionResult Index()
         {
             return View();
@@ -28,7 +34,8 @@ namespace VisitorRegistration.Controllers
                 {
                     Visitor visitor = new Visitor();
                     MapViewModelToVisitor(viewModel, visitor);
-                    // add to database
+                    _visitorRepository.Add(visitor);
+                    _visitorRepository.SaveChanges();
                     TempData["message"] = $"Successfully registered: {visitor.LastName} {visitor.Name}";
                 }
                 catch (Exception e)
