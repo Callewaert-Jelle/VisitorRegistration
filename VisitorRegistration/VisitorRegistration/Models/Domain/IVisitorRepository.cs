@@ -9,6 +9,7 @@ namespace VisitorRegistration.Models.Domain
     {
         Visitor GetBy(int visitorId);
         IEnumerable<Visitor> GetAll();
+        IEnumerable<Visitor> GetCurrentVisitors();
         IEnumerable<Visitor> GetAllByDate(DateTime date);
         void Add(Visitor visitor);
         void SaveChanges();

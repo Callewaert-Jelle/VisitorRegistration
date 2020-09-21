@@ -38,6 +38,15 @@ namespace VisitorRegistration.Data.Repositories
             return _visitors.FirstOrDefault(v => v.VisitorId == visitorId);
         }
 
+        public IEnumerable<Visitor> GetCurrentVisitors()
+        {
+            var vs = _visitors;
+            var vsNow = vs.Where(v => v.Entered.Date == DateTime.Now.Date);
+            var vsNotLeft = vs.Where(v => v.Left.Date == DateTime.MinValue.Date);
+            var vsNowNotLeft = _visitors.Where(v => v.Entered.Date == DateTime.Now.Date).Where(v => v.Left.Date == DateTime.MinValue.Date);
+            return _visitors.Where(v => v.Entered.Date == DateTime.Now.Date).Where(v => v.Left.Date == DateTime.MinValue.Date);
+        }
+
         public void SaveChanges()
         {
             _dbContext.SaveChanges();

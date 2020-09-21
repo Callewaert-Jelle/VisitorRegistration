@@ -48,7 +48,7 @@ namespace VisitorRegistration.Controllers
 
         public IActionResult LogOut()
         {
-            IEnumerable<Visitor> visitors = _visitorRepository.GetAllByDate(DateTime.Now);
+            IEnumerable<Visitor> visitors = _visitorRepository.GetCurrentVisitors();
             return View(visitors);
         }
 

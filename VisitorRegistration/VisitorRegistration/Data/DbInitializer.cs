@@ -40,9 +40,17 @@ namespace VisitorRegistration.Data
                     Entered = DateTime.Now, 
                     Company = "CompanyY", 
                     LicensePlate = "123 - xyz" };
+                Visitor v3 = new Visitor { 
+                    Name = "Patrick", 
+                    LastName = "Star", 
+                    VisitorType = VisitorType.Visitor, 
+                    Entered = DateTime.Now, 
+                    Left = DateTime.Now.AddMinutes(10.0)
+                };
 
                 _dbContext.Visitors.Add(v1);
                 _dbContext.Visitors.Add(v2);
+                _dbContext.Visitors.Add(v3);
 
                 _dbContext.SaveChanges();
             }
