@@ -16,7 +16,7 @@ namespace VisitorRegistration.Models.Domain
         #endregion
 
         #region constructors
-        protected Visitor()
+        public Visitor()
         {
             Entered = DateTime.Now;
         }

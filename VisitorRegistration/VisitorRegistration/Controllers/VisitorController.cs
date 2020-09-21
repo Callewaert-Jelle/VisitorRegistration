@@ -16,8 +16,28 @@ namespace VisitorRegistration.Controllers
 
         public IActionResult Register()
         {
-            ViewData["VisitorTypes"] = GetVisitorTypesAsSelectList();
             return View(new VisitorViewModel());
+        }
+
+        [HttpPost]
+        public IActionResult Register(VisitorViewModel viewModel)
+        {
+            if (ModelState.IsValid)
+            {
+                try
+                {
+                    Visitor visitor = new Visitor();
+                    MapViewModelToVisitor(viewModel, visitor);
+                    // add to database
+                    TempData["message"] = $"Successfully registered: {visitor.LastName} {visitor.Name}";
+                }
+                catch (Exception e)
+                {
+                    ModelState.AddModelError("", e.Message);
+                }
+                return RedirectToAction(nameof(Index));
+            }
+            return View(nameof(Register), viewModel);
         }
 
         public IActionResult LogOut()
@@ -25,21 +45,13 @@ namespace VisitorRegistration.Controllers
             return View();
         }
 
-        private SelectList GetVisitorTypesAsSelectList()
+        private void MapViewModelToVisitor(VisitorViewModel viewModel, Visitor visitor)
         {
-            //// temporary
-            //Array values = Enum.GetValues(typeof(VisitorTypes));
-            //List<ListItem> items = new List<ListItem>(values.Length);
-
-            //foreach(var i in values)
-            //{
-            //    items.Add(new ListItem
-            //    {
-            //        Text = Enum.GetName(typeof(VisitorTypes), i),
-            //        Value = ((int)i).ToString()
-            //    });
-            //}
-            return null;
+            visitor.Name = viewModel.Name;
+            visitor.LastName = viewModel.LastName;
+            visitor.VisitorType = viewModel.VisitorType;
+            visitor.Company = viewModel.Company;
+            visitor.LicensePlate = viewModel.LicensePlate;
         }
     }
 }
