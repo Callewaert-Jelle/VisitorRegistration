@@ -59,7 +59,7 @@ namespace VisitorRegistration.Data
         private async Task InitializeUsers()
         {
             string userName = "Admin";
-            IdentityUser user = new IdentityUser { UserName = userName };
+            IdentityUser user = new IdentityUser { UserName = userName, Email = "admin@admin.com" };
             await _userManager.CreateAsync(user, "Admin123!");
             await _userManager.AddClaimAsync(user, new Claim(ClaimTypes.Role, "admin"));
         }
