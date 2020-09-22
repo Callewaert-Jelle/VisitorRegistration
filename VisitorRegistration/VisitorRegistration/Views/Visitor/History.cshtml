@@ -1,0 +1,38 @@
+﻿@model VisitorRegistration.Models.HistoryViewModel.HistoryViewModel
+@inject Microsoft.AspNetCore.Mvc.Localization.IViewLocalizer localizer
+@*
+    For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
+*@
+@{
+    ViewData["Title"] = localizer["Title"];
+}
+
+<form asp-controller="Visitor" asp-action="History" method="post">
+    <div class="form-group">
+        <label asp-for="DatePickerViewModel.Date"></label>
+        <br />
+        <input asp-for="DatePickerViewModel.Date" />
+        <span asp-validation-for="DatePickerViewModel.Date" class="text-danger"></span>
+        <button class="btn btn-primary" type="submit">@localizer["ChooseDate"]</button>
+    </div>
+</form>
+
+<table class="table table-striped table-bordered">
+    <tr>
+        <th>@localizer["Name"]</th>
+        <th>@localizer["LastName"]</th>
+        <th>@localizer["Type"]</th>
+        <th>@localizer["Entered"]</th>
+        <th>@localizer["Left"]</th>
+    </tr>
+    @foreach (var visitor in Model.Visitors)
+    {
+        <tr>
+            <td>@visitor.Name</td>
+            <td>@visitor.LastName</td>
+            <td>@localizer[visitor.VisitorType.ToString()]</td>
+            <td>@visitor.Entered</td>
+            <td>@visitor.Left</td>
+        </tr>
+    }
+</table>

@@ -2,13 +2,13 @@
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Localization;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.Extensions.Localization;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading;
 using VisitorRegistration.Models.Domain;
 using VisitorRegistration.Models.GroupedByDurationViewModels;
+using VisitorRegistration.Models.HistoryViewModel;
 using VisitorRegistration.Models.VisitorViewModels;
 
 namespace VisitorRegistration.Controllers
@@ -95,6 +95,7 @@ namespace VisitorRegistration.Controllers
             return View(visitors);
         }
 
+        [Authorize(Policy = "AdminOnly")]
         public IActionResult GroupedByDuration(DateTime date)
         {
             if (date == DateTime.MinValue)
@@ -115,11 +116,39 @@ namespace VisitorRegistration.Controllers
         }
 
         [HttpPost]
+        [Authorize(Policy = "AdminOnly")]
         public IActionResult GroupedByDuration(GroupedByDurationViewModel viewModel)
         {
             if (ModelState.IsValid)
             {
                 return GroupedByDuration(viewModel.datePickerViewModel.Date);
+            }
+            return View(viewModel);
+        }
+
+        [Authorize(Policy = "AdminOnly")]
+        public IActionResult History(DateTime date)
+        {
+            if (date == DateTime.MinValue)
+            {
+                date = DateTime.Now;
+            }
+            IEnumerable<Visitor> visitors = _visitorRepository.GetAllByDate(date);
+            HistoryViewModel model = new HistoryViewModel()
+            {
+                DatePickerViewModel = new DatePickerViewModel() { Date = DateTime.Today },
+                Visitors = visitors
+            };
+            return View(model);
+        }
+
+        [HttpPost]
+        [Authorize(Policy = "AdminOnly")]
+        public IActionResult History(HistoryViewModel viewModel)
+        {
+            if (ModelState.IsValid)
+            {
+                return History(viewModel.DatePickerViewModel.Date);
             }
             return View(viewModel);
         }
