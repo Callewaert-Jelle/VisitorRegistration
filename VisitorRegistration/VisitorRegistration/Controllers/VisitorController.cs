@@ -2,6 +2,7 @@
 using Microsoft.AspNetCore.Mvc;
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using VisitorRegistration.Models.Domain;
 using VisitorRegistration.Models.VisitorViewModels;
 
@@ -76,6 +77,16 @@ namespace VisitorRegistration.Controllers
         {
             IEnumerable<Visitor> visitors = _visitorRepository.GetCurrentVisitors();
             return View(visitors);
+        }
+
+        public IActionResult GroupedByDuration()
+        {
+            IEnumerable<Visitor> visitors = _visitorRepository.GetAllByDate(DateTime.Now).Where(v => !v.Left.Date.Equals(DateTime.MinValue.Date));
+            IEnumerable<IGrouping<double, Visitor>> queryByDuration = 
+                from visitor in visitors
+                // where !visitor.Left.Date.Equals(DateTime.MinValue.Date)
+                group visitor by Math.Ceiling(visitor.Left.Subtract(visitor.Entered).TotalHours);
+            return View(queryByDuration);
         }
 
         private void MapViewModelToVisitor(VisitorViewModel viewModel, Visitor visitor)

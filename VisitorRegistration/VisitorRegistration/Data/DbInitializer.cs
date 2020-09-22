@@ -47,10 +47,18 @@ namespace VisitorRegistration.Data
                     Entered = DateTime.Now, 
                     Left = DateTime.Now.AddMinutes(10.0)
                 };
+                Visitor v4 = new Visitor { 
+                    Name = "Dude", 
+                    LastName = "From Yesterday", 
+                    VisitorType = VisitorType.Visitor, 
+                    Entered = DateTime.Now.AddDays(-1), 
+                    Left = DateTime.Now.AddDays(-1).AddMinutes(10.0)
+                };
 
                 _dbContext.Visitors.Add(v1);
                 _dbContext.Visitors.Add(v2);
                 _dbContext.Visitors.Add(v3);
+                _dbContext.Visitors.Add(v4);
 
                 _dbContext.SaveChanges();
             }

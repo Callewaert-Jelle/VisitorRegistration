@@ -1,0 +1,14 @@
+﻿@model IEnumerable<IGrouping<System.Double, VisitorRegistration.Models.Domain.Visitor>>
+@*
+    For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
+*@
+@{
+    ViewData["Title"] = "Visitors grouped by duration of their visit";
+}
+
+<h1>@ViewData["Title"]</h1>
+
+@foreach (var group in Model)
+{
+    <p><b>@(group.Key-1) - @group.Key</b> : @group.Count()</p>
+}
