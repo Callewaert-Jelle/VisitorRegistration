@@ -1,18 +1,20 @@
 ﻿@model VisitorRegistration.Models.GroupedByDurationViewModels.GroupedByDurationViewModel
+@inject Microsoft.AspNetCore.Mvc.Localization.IViewLocalizer localizer
 @*
     For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
 *@
 @{
-    ViewData["Title"] = "Visitors grouped by duration of their visit";
+    ViewData["Title"] = localizer["Title"];
 }
 
 <h1>@ViewData["Title"]</h1>
 <form asp-controller="Visitor" asp-action="GroupedByDuration" method="post">
     <div class="form-group">
         <label asp-for="datePickerViewModel.Date"></label>
+        <br />
         <input asp-for="datePickerViewModel.Date" />
         <span asp-validation-for="datePickerViewModel.Date" class="text-danger"></span>
-        <button class="btn btn-primary" type="submit">Choose</button>
+        <button class="btn btn-primary" type="submit">@localizer["ChooseDate"]</button>
     </div>
 </form>
 

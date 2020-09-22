@@ -1,19 +1,19 @@
 ﻿@model IEnumerable<VisitorRegistration.Models.Domain.Visitor>
+@inject Microsoft.AspNetCore.Mvc.Localization.IViewLocalizer localizer
 @*
     For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
 *@
 @{
-    ViewData["Title"] = "Log out";
+    ViewData["Title"] = localizer["LogOut"];
 }
 
 <h1>@ViewData["Title"]</h1>
-<p>Current registered amount: <b>@Model.Count()</b></p>
 
 <table class="table table-striped table-bordered">
     <tr>
-        <th>Name</th>
-        <th>Last Name</th>
-        <th>Type of visitor</th>
+        <th>@localizer["Name"]</th>
+        <th>@localizer["LastName"]</th>
+        <th>@localizer["Type"]</th>
     </tr>
     @foreach(var visitor in Model)
     {
@@ -24,7 +24,7 @@
             <td>
                 <form asp-controller="Visitor" asp-action="LogOut" asp-route-id="@visitor.VisitorId" method="post" role="form">
                     <div>
-                        <button type="submit" name="logout">Log out</button>
+                        <button type="submit" name="logout">@localizer["LogOut"]</button>
                     </div>
                 </form>
             </td>

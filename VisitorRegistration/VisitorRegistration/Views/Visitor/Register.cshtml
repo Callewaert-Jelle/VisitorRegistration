@@ -1,11 +1,11 @@
 ﻿@model VisitorRegistration.Models.VisitorViewModels.VisitorViewModel
-
+@inject Microsoft.AspNetCore.Mvc.Localization.IViewLocalizer localizer
 @using VisitorRegistration.Models.Domain
 @*
     Basically the 'create'..
 *@
 @{
-    ViewData["Title"] = "Register";
+    ViewData["Title"] = localizer["Register"];
 }
 
 <h1>@ViewData["Title"]</h1>
@@ -24,7 +24,7 @@
     <div class="form-group">
         <label asp-for="VisitorType"></label>
         <select asp-for="VisitorType" asp-items="Html.GetEnumSelectList<VisitorType>()" class="form-control">
-            <option value="">-- Select type --</option>
+            <option value="">-- @localizer["SelectType"] --</option>
         </select>
         <span asp-validation-for="VisitorType" class="text-danger"></span>
     </div>
@@ -40,8 +40,8 @@
     </div>
 
     <div>
-        <button class="btn btn-primary" type="submit">Save</button>
-        <a asp-action="Index" class="btn btn-secondary">Cancel</a>
+        <button class="btn btn-primary" type="submit">@localizer["Save"]</button>
+        <a asp-action="Index" class="btn btn-secondary">@localizer["Cancel"]</a>
     </div>
 </form>
 

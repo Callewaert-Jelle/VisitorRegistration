@@ -1,10 +1,13 @@
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Identity;
+using Microsoft.AspNetCore.Localization;
+using Microsoft.AspNetCore.Mvc.Razor;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
+using System.Globalization;
 using System.Security.Claims;
 using VisitorRegistration.Data;
 using VisitorRegistration.Data.Repositories;
@@ -24,6 +27,7 @@ namespace VisitorRegistration
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
+            services.AddLocalization(options => options.ResourcesPath = "Resources");
             services.AddDbContext<ApplicationDbContext>(options =>
                 options.UseSqlServer(
                     Configuration.GetConnectionString("DefaultConnection")));
@@ -31,6 +35,8 @@ namespace VisitorRegistration
                 .AddEntityFrameworkStores<ApplicationDbContext>();
             services.AddControllersWithViews();
             services.AddRazorPages();
+            services.AddMvc().AddViewLocalization(LanguageViewLocationExpanderFormat.Suffix)
+                .AddDataAnnotationsLocalization();
 
             services.Configure<IdentityOptions>(options =>
             {
@@ -62,6 +68,18 @@ namespace VisitorRegistration
             }
             app.UseHttpsRedirection();
             app.UseStaticFiles();
+
+            var cultures = new[]
+            {
+                new CultureInfo("en"),
+                new CultureInfo("nl")
+            };
+            app.UseRequestLocalization(options =>
+            {
+                options.DefaultRequestCulture = new RequestCulture("nl");
+                options.SupportedCultures = cultures;
+                options.SupportedUICultures = cultures;
+            });
 
             app.UseRouting();
 

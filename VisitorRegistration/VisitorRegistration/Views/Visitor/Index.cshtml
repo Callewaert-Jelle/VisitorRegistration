@@ -1,8 +1,10 @@
-﻿@{
+﻿@inject Microsoft.AspNetCore.Mvc.Localization.IViewLocalizer localizer
+@{
+    ViewData["Title"] = localizer["Title"];
 }
-
+<h1>@ViewData["Title"]</h1>
 <div>
-    <a asp-controller="Visitor" asp-action="Register">Register</a>
-    <a asp-controller="Visitor" asp-action="LogOut">Log out</a>
-    <a asp-controller="Visitor" asp-action="Consult">Consult</a>
+    <a asp-controller="Visitor" asp-action="Register">@localizer["Register"]</a>
+    <a asp-controller="Visitor" asp-action="LogOut">@localizer["Log Out"]</a>
+    <a asp-controller="Visitor" asp-action="Consult">@localizer["Consult"]</a>
 </div>
