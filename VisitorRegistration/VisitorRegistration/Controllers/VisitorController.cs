@@ -14,10 +14,9 @@ namespace VisitorRegistration.Controllers
     {
         private readonly IVisitorRepository _visitorRepository;
         private readonly IStringLocalizer<VisitorViewModel> _localizer;
-        public VisitorController(IVisitorRepository visitorRepository, IStringLocalizer<VisitorViewModel> localizer)
+        public VisitorController(IVisitorRepository visitorRepository)
         {
             _visitorRepository = visitorRepository;
-            _localizer = localizer;
         }
 
         public IActionResult Index()
@@ -27,7 +26,7 @@ namespace VisitorRegistration.Controllers
 
         public IActionResult Register()
         {
-            return View(new VisitorViewModel(_localizer));
+            return View(new VisitorViewModel());
         }
 
         [HttpPost]
@@ -94,9 +93,11 @@ namespace VisitorRegistration.Controllers
                 from visitor in visitors
                 // where !visitor.Left.Date.Equals(DateTime.MinValue.Date)
                 group visitor by Math.Ceiling(visitor.Left.Subtract(visitor.Entered).TotalHours);
-            var model = new GroupedByDurationViewModel();
-            model.datePickerViewModel = new DatePickerViewModel() { Date = DateTime.Today };
-            model.resultSetModel = queryByDuration;
+            var model = new GroupedByDurationViewModel
+            {
+                datePickerViewModel = new DatePickerViewModel() { Date = DateTime.Today },
+                resultSetModel = queryByDuration
+            };
             return View(model);
         }
 

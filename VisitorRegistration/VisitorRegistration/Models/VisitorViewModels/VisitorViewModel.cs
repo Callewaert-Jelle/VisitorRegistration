@@ -6,13 +6,6 @@ namespace VisitorRegistration.Models.VisitorViewModels
 {
     public class VisitorViewModel
     {
-        private readonly IStringLocalizer<VisitorViewModel> _localizer;
-
-        public VisitorViewModel(IStringLocalizer<VisitorViewModel> localizer)
-        {
-            _localizer = localizer;
-        }
-
         [Required]
         [Display(Name = "Name")]
         public string Name { get; set; }
@@ -26,6 +19,5 @@ namespace VisitorRegistration.Models.VisitorViewModels
         public string Company { get; set; }
         [Display(Name = "LicensePlate")]
         public string LicensePlate { get; set; }
-
     }
 }
