@@ -2,6 +2,7 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Threading;
 using System.Threading.Tasks;
 using VisitorRegistration.Models.Domain;
 
@@ -20,6 +21,14 @@ namespace VisitorRegistration.Data.Repositories
 
         public void Add(Visitor visitor)
         {
+            Thread logOutThread = new Thread(
+                () =>
+                {
+                    Thread.Sleep(10 * 1000);
+                    visitor.LogOut();
+                    SaveChanges();
+                });
+            // logOutThread.Start();
             _visitors.Add(visitor);
         }
 
@@ -40,10 +49,6 @@ namespace VisitorRegistration.Data.Repositories
 
         public IEnumerable<Visitor> GetCurrentVisitors()
         {
-            var vs = _visitors;
-            var vsNow = vs.Where(v => v.Entered.Date == DateTime.Now.Date);
-            var vsNotLeft = vs.Where(v => v.Left.Date == DateTime.MinValue.Date);
-            var vsNowNotLeft = _visitors.Where(v => v.Entered.Date == DateTime.Now.Date).Where(v => v.Left.Date == DateTime.MinValue.Date);
             return _visitors.Where(v => v.Entered.Date == DateTime.Now.Date).Where(v => v.Left.Date == DateTime.MinValue.Date);
         }
 

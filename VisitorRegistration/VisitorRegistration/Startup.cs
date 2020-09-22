@@ -54,6 +54,7 @@ namespace VisitorRegistration
             services.Configure<IdentityOptions>(options =>
             {
                 options.Password.RequireNonAlphanumeric = false;
+                options.Password.RequireUppercase = false;
             });
 
             services.AddAuthorization(options =>

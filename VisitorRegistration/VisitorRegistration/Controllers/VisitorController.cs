@@ -2,9 +2,11 @@
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Localization;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.Extensions.Localization;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Threading;
 using VisitorRegistration.Models.Domain;
 using VisitorRegistration.Models.GroupedByDurationViewModels;
 using VisitorRegistration.Models.VisitorViewModels;
@@ -38,6 +40,17 @@ namespace VisitorRegistration.Controllers
                 {
                     Visitor visitor = new Visitor();
                     MapViewModelToVisitor(viewModel, visitor);
+                    var repo = _visitorRepository;
+                    Thread aNewThread = new Thread(
+                        () => {
+                            var id = visitor.VisitorId;
+                            // after 16h automatically log out
+                            // Thread.Sleep(16 * 60 * 60 * 1000);
+                            Thread.Sleep(10 * 1000);
+                            LogOutAutomatically(id, repo);
+                        }
+                    );
+                    //aNewThread.Start();
                     _visitorRepository.Add(visitor);
                     _visitorRepository.SaveChanges();
                     TempData["message"] = $"Successfully registered: {visitor.LastName} {visitor.Name}";
@@ -121,6 +134,14 @@ namespace VisitorRegistration.Controllers
             );
             return LocalRedirect(returnUrl);
         }
+
+        private void LogOutAutomatically(int id, IVisitorRepository repo)
+        {
+            Visitor v = repo.GetBy(id);
+            v.LogOut();
+            repo.SaveChanges();
+        }
+
         private void MapViewModelToVisitor(VisitorViewModel viewModel, Visitor visitor)
         {
             visitor.Name = viewModel.Name;
