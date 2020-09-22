@@ -4,6 +4,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using VisitorRegistration.Models.Domain;
+using VisitorRegistration.Models.GroupedByDurationViewModels;
 using VisitorRegistration.Models.VisitorViewModels;
 
 namespace VisitorRegistration.Controllers
@@ -86,7 +87,10 @@ namespace VisitorRegistration.Controllers
                 from visitor in visitors
                 // where !visitor.Left.Date.Equals(DateTime.MinValue.Date)
                 group visitor by Math.Ceiling(visitor.Left.Subtract(visitor.Entered).TotalHours);
-            return View(queryByDuration);
+            var model = new GroupedByDurationViewModel();
+            model.datePickerViewModel = new DatePickerViewModel();
+            model.resultSetModel = queryByDuration;
+            return View(model);
         }
 
         private void MapViewModelToVisitor(VisitorViewModel viewModel, Visitor visitor)

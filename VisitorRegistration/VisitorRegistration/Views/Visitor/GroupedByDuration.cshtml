@@ -1,4 +1,4 @@
-﻿@model IEnumerable<IGrouping<System.Double, VisitorRegistration.Models.Domain.Visitor>>
+﻿@model VisitorRegistration.Models.GroupedByDurationViewModels.GroupedByDurationViewModel
 @*
     For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
 *@
@@ -7,8 +7,16 @@
 }
 
 <h1>@ViewData["Title"]</h1>
+<form asp-controller="Visitor" asp-action="GroupedByDuration" method="post">
+    <div class="form-group">
+        <label asp-for="datePickerViewModel.Date"></label>
+        <input asp-for="datePickerViewModel.Date" />
+        <span asp-validation-for="datePickerViewModel.Date" class="text-danger"></span>
+        <button class="btn btn-primary" type="submit">Choose</button>
+    </div>
+</form>
 
-@foreach (var group in Model)
+@foreach (var group in Model.resultSetModel)
 {
     <p><b>@(group.Key-1) - @group.Key</b> : @group.Count()</p>
 }
