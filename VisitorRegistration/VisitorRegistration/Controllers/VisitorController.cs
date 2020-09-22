@@ -1,5 +1,6 @@
 ﻿using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.Extensions.Localization;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -12,9 +13,11 @@ namespace VisitorRegistration.Controllers
     public class VisitorController : Controller
     {
         private readonly IVisitorRepository _visitorRepository;
-        public VisitorController(IVisitorRepository visitorRepository)
+        private readonly IStringLocalizer<VisitorViewModel> _localizer;
+        public VisitorController(IVisitorRepository visitorRepository, IStringLocalizer<VisitorViewModel> localizer)
         {
             _visitorRepository = visitorRepository;
+            _localizer = localizer;
         }
 
         public IActionResult Index()
@@ -24,7 +27,7 @@ namespace VisitorRegistration.Controllers
 
         public IActionResult Register()
         {
-            return View(new VisitorViewModel());
+            return View(new VisitorViewModel(_localizer));
         }
 
         [HttpPost]

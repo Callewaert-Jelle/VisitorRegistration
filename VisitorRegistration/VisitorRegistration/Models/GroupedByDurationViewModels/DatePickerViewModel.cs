@@ -5,8 +5,9 @@ namespace VisitorRegistration.Models.GroupedByDurationViewModels
 {
     public class DatePickerViewModel
     {
+        [Display(Name = "Date")]
         [DataType(DataType.Date)]
-        [DisplayFormat(ApplyFormatInEditMode = true, DataFormatString = "{0:dd-MM-yyyy}")]
+        [DisplayFormat(ApplyFormatInEditMode = true)]
         public DateTime Date { get; set; }
     }
 }
