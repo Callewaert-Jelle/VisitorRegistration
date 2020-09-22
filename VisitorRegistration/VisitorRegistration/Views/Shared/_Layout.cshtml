@@ -30,8 +30,13 @@
                     ****************************************
                     -->
                 </div>
-                <div>
-                    <partial name="_LoginPartial" />
+                <div class="row">
+                    <div class="col-md-9 float-right">
+                        @await Html.PartialAsync("_SelectCulturePartial")
+                    </div>
+                    <div class="col-md-3">
+                        <partial name="_LoginPartial" />
+                    </div>
                 </div>
             </div>
         </nav>
@@ -48,7 +53,7 @@
     </div>
 
     <footer class="border-top footer text-muted">
-        <div class="container">
+        <div class="row">>
             &copy; 2020 - VisitorRegistration - <a asp-area="" asp-controller="Home" asp-action="Privacy">Privacy</a>
         </div>
     </footer>

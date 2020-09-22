@@ -7,6 +7,7 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
+using Microsoft.Extensions.Options;
 using System.Globalization;
 using System.Security.Claims;
 using VisitorRegistration.Data;
@@ -37,6 +38,18 @@ namespace VisitorRegistration
             services.AddRazorPages();
             services.AddMvc().AddViewLocalization(LanguageViewLocationExpanderFormat.Suffix)
                 .AddDataAnnotationsLocalization();
+
+            services.Configure<RequestLocalizationOptions>(options =>
+            {
+                var cultures = new[]
+                {
+                    new CultureInfo("en"),
+                    new CultureInfo("nl")
+                };
+                options.DefaultRequestCulture = new RequestCulture("nl");
+                options.SupportedCultures = cultures;
+                options.SupportedUICultures = cultures;
+            });
 
             services.Configure<IdentityOptions>(options =>
             {
@@ -69,17 +82,10 @@ namespace VisitorRegistration
             app.UseHttpsRedirection();
             app.UseStaticFiles();
 
-            var cultures = new[]
-            {
-                new CultureInfo("en"),
-                new CultureInfo("nl")
-            };
-            app.UseRequestLocalization(options =>
-            {
-                options.DefaultRequestCulture = new RequestCulture("nl");
-                options.SupportedCultures = cultures;
-                options.SupportedUICultures = cultures;
-            });
+            
+            app.UseRequestLocalization(
+                app.ApplicationServices
+                    .GetRequiredService<IOptions<RequestLocalizationOptions>>().Value);
 
             app.UseRouting();
 

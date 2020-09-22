@@ -117,28 +117,10 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
-  <data name="Applicant" xml:space="preserve">
-    <value>Applicant</value>
+  <data name="en" xml:space="preserve">
+    <value>Engels</value>
   </data>
-  <data name="CurrentAmount" xml:space="preserve">
-    <value>Current number of registered persons</value>
-  </data>
-  <data name="LastName" xml:space="preserve">
-    <value>Last name</value>
-  </data>
-  <data name="LogOut" xml:space="preserve">
-    <value>Logout</value>
-  </data>
-  <data name="Name" xml:space="preserve">
-    <value>Name</value>
-  </data>
-  <data name="Supplier" xml:space="preserve">
-    <value>Supplier</value>
-  </data>
-  <data name="Type" xml:space="preserve">
-    <value>Type of visitor</value>
-  </data>
-  <data name="Visitor" xml:space="preserve">
-    <value>Visitor</value>
+  <data name="nl" xml:space="preserve">
+    <value>Nederlands</value>
   </data>
 </root>
