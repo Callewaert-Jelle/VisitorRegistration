@@ -80,17 +80,31 @@ namespace VisitorRegistration.Controllers
             return View(visitors);
         }
 
-        public IActionResult GroupedByDuration()
+        public IActionResult GroupedByDuration(DateTime date)
         {
-            IEnumerable<Visitor> visitors = _visitorRepository.GetAllByDate(DateTime.Now).Where(v => !v.Left.Date.Equals(DateTime.MinValue.Date));
+            if (date == DateTime.MinValue)
+            {
+                date = DateTime.Now;
+            }
+            IEnumerable<Visitor> visitors = _visitorRepository.GetAllByDate(date).Where(v => !v.Left.Date.Equals(DateTime.MinValue.Date));
             IEnumerable<IGrouping<double, Visitor>> queryByDuration = 
                 from visitor in visitors
                 // where !visitor.Left.Date.Equals(DateTime.MinValue.Date)
                 group visitor by Math.Ceiling(visitor.Left.Subtract(visitor.Entered).TotalHours);
             var model = new GroupedByDurationViewModel();
-            model.datePickerViewModel = new DatePickerViewModel();
+            model.datePickerViewModel = new DatePickerViewModel() { Date = DateTime.Today };
             model.resultSetModel = queryByDuration;
             return View(model);
+        }
+
+        [HttpPost]
+        public IActionResult GroupedByDuration(GroupedByDurationViewModel viewModel)
+        {
+            if (ModelState.IsValid)
+            {
+                return GroupedByDuration(viewModel.datePickerViewModel.Date);
+            }
+            return View(viewModel);
         }
 
         private void MapViewModelToVisitor(VisitorViewModel viewModel, Visitor visitor)

@@ -30,7 +30,7 @@ namespace VisitorRegistration.Data.Repositories
 
         public IEnumerable<Visitor> GetAllByDate(DateTime date)
         {
-            return _visitors.Where(v => v.Entered.Date == DateTime.Now.Date);
+            return _visitors.Where(v => v.Entered.Date == date.Date);
         }
 
         public Visitor GetBy(int visitorId)

@@ -37,15 +37,16 @@ namespace VisitorRegistration.Data
                     Name = "Jane", 
                     LastName = "Doe", 
                     VisitorType = VisitorType.Applicant, 
-                    Entered = DateTime.Now, 
+                    Entered = DateTime.Now.AddMinutes(-100), 
+                    Left = DateTime.Now,
                     Company = "CompanyY", 
                     LicensePlate = "123 - xyz" };
                 Visitor v3 = new Visitor { 
                     Name = "Patrick", 
                     LastName = "Star", 
                     VisitorType = VisitorType.Visitor, 
-                    Entered = DateTime.Now, 
-                    Left = DateTime.Now.AddMinutes(10.0)
+                    Entered = DateTime.Now.AddMinutes(-10), 
+                    Left = DateTime.Now
                 };
                 Visitor v4 = new Visitor { 
                     Name = "Dude", 
