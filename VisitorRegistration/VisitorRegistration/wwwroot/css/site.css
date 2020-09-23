@@ -69,3 +69,10 @@ body {
   white-space: nowrap;
   line-height: 60px; /* Vertically center the text there */
 }
+
+.giant-button {
+    border: 2px solid blue;
+    border-radius: 1em;
+    font-size: 5em;
+    padding: 0.5em
+}

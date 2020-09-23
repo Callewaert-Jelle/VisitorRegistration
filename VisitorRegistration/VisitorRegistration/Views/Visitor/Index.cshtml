@@ -2,9 +2,15 @@
 @{
     ViewData["Title"] = localizer["Title"];
 }
-<h1>@ViewData["Title"]</h1>
-<div>
-    <a asp-controller="Visitor" asp-action="Register">@localizer["Register"]</a>
-    <a asp-controller="Visitor" asp-action="LogOut">@localizer["Log Out"]</a>
-    <a asp-controller="Visitor" asp-action="Consult">@localizer["Consult"]</a>
+<h1 style="text-align:center">@ViewData["Title"]</h1>
+<div class="row" style="padding-top:10em;">
+    <div style="padding-bottom: 6em;" class="col-md-4 col-sm-12 text-center">
+        <a style="border: 2px solid blue; border-radius: 2em; font-size: 5em; padding: 0.5em" class="giant-button" asp-controller="Visitor" asp-action="Register">@localizer["Register"]</a>
+    </div>
+    <div style="padding-bottom: 6em;" class="col-md-4 col-sm-12 text-center">
+        <a style="border: 2px solid blue; border-radius: 2em; font-size: 5em; padding: 0.5em" class="giant-button" asp-controller="Visitor" asp-action="LogOut">@localizer["Log Out"]</a>
+    </div>
+    <div style="padding-bottom: 6em;" class="col-md-4 col-sm-12 text-center">
+        <a style="border: 2px solid blue; border-radius: 2em; font-size: 5em; padding: 0.5em" class="giant-button" asp-controller="Visitor" asp-action="Consult">@localizer["Consult"]</a>
+    </div>
 </div>
